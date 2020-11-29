@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+   torture:
+       image: meetrix/jitsi-meet-torture
+   hub:
+       image: selenium/hub:latest
+   node:
+       build:
+           context: node
+           dockerfile: jitsi-meet-torture-selenium-node\Dockerfile
+       image: meetrix/jitsi-meet-torture-selenium-node
+       shm_size: 700M
+       volumes:
+           - /dev/shm:/dev/shm
+       depends_on:
+           - hub
+       environment:
+           HUB_HOST: hub
